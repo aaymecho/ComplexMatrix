@@ -53,8 +53,8 @@ Complex Complex::operator-(Complex input) {
 
 Complex Complex::operator*(Complex input) {
     Complex sum;
-    sum.real = getReal() * input.getReal();
-    sum.imag = getImag() * input.getImag();
+    sum.real = (getReal() * input.getReal()) - (getImag() * input.getImag());
+    sum.imag = (getReal() * input.getImag()) + ( getImag() * input.getReal());
     return sum;
 };
 
@@ -64,9 +64,9 @@ Complex Complex::operator/(Complex input) {
         sum.NaN = true;
     }
     else {
-        sum.real = getReal() / input.getReal();
-        sum.imag = getImag() / input.getImag();
-    }
+        sum.NaN = false;
+        sum.real = (((real)*(input.real))+((imag)*(input.imag)))/(pow(input.real,2)+pow(input.imag,2));
+        sum.imag = (((input.real)*(imag))-((real)*(input.imag)))/(pow(input.real,2)+pow(input.imag,2));    }
     return sum;
 };
 
@@ -74,20 +74,44 @@ void Complex::setComplex(double realInput, double imagInput) {
     real = realInput;
     imag = imagInput;
 };
+
+bool Complex::getNaN() {
+    return NaN;
+}
 //-------------------------------------------------------------------
 
-void Complex::displayRect() {
-    fstream myFile;
-    myFile.open("output.txt", ios::app);
-    myFile << real << " " << imag << "j" << endl;
-    myFile.close();
+ostream& operator<<(ostream& out, Complex& object) {
+
+    if (object.getNaN() == true) {
+        return out << "NaN" << endl;
+    } else {
+        return out << object.getReal() << " " << object.getImag() << "j" << endl;
+    }
 };
 
-void Complex::displayPolar() {
+ostream& Complex::displayPolar() {
     double amp = sqrt(pow(imag, 2) + pow(real, 2));
-    double angle = atan(imag/real);
-    fstream myFile;
-    myFile.open("output.txt", ios::app);
-    myFile << amp << " < " << angle << endl;
-    myFile.close();
+    double angle;
+    if (real < 0) {
+        angle = atan(real/imag);
+    }
+    else if (real > 0) {
+        angle = atan(real/imag) + 2;
+    }
+    else {
+        angle = 0;
+    }
+    if (NaN == true) {
+        return cout << "NaN" << endl;
+    } else {
+        return cout << amp << " < " << angle << endl;
+    }
+};
+
+ostream& Complex::displayRect() {
+    if (NaN == true) {
+        return cout << "NaN" << endl;
+    } else {
+        return cout << real << " + " << imag << "j" << endl;
+    }
 };

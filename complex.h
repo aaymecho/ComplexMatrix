@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
-#include <fstream>
 using namespace std;
 
 #define ROW 2;
@@ -23,27 +22,24 @@ class Complex {
         void setImag(double);
         double getImag();
         void setComplex(double, double);
+        bool getNaN();
 
         //operator overloading
         Complex operator+(Complex);
         Complex operator-(Complex);
         Complex operator*(Complex);
         Complex operator/(Complex);
-        Complex& operator[](int);
         friend ostream& operator<<(ostream&, Complex&);
 
 
         //polar and rectangular
-        void displayRect();
-        void displayPolar();
+        
+        ostream& displayRect();
+        ostream& displayPolar();
         
     private:
         double real;
         double imag;
         bool NaN;
-};
-ostream& operator<<(ostream& out, Complex& object) {
-    out << object.getReal() << " " << object.getImag();
-    return out;
 };
 #endif
