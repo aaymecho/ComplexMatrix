@@ -33,6 +33,10 @@ double Complex::getReal() {
 double Complex::getImag() {
     return imag;
 };
+
+bool Complex::getNaN() {
+    return NaN;
+}
 //end of setters and getters-------------------------------------
 
 
@@ -74,10 +78,6 @@ void Complex::setComplex(double realInput, double imagInput) {
     real = realInput;
     imag = imagInput;
 };
-
-bool Complex::getNaN() {
-    return NaN;
-}
 //-------------------------------------------------------------------
 
 ostream& operator<<(ostream& out, Complex& object) {
@@ -92,19 +92,23 @@ ostream& operator<<(ostream& out, Complex& object) {
 ostream& Complex::displayPolar() {
     double amp = sqrt(pow(imag, 2) + pow(real, 2));
     double angle;
-    if (real < 0) {
-        angle = atan(real/imag);
-    }
-    else if (real > 0) {
-        angle = atan(real/imag) + 2;
+    if (NaN == false) {
+        if (real > 0) {
+            angle = atan(imag/real);
+        }
+        else if (real < 0 && imag > 0) {
+            angle = atan(imag/real) + M_PI;
+        }
+        else if (real < 0 && imag < 0) {
+            angle = atan(imag/real) - M_PI;
+        }
+        else {
+            angle = 0;
+        }
+        return cout << amp << " < " << angle << endl;
     }
     else {
-        angle = 0;
-    }
-    if (NaN == true) {
         return cout << "NaN" << endl;
-    } else {
-        return cout << amp << " < " << angle << endl;
     }
 };
 
