@@ -2,6 +2,8 @@
 
 //constructor setup
 Complex::Complex() {
+    cout << fixed;
+    cout<< setprecision(6);
     real = 0;
     imag = 0;
     NaN = false;

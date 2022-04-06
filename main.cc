@@ -11,7 +11,6 @@ Complex a[5];
 Complex result[5];
 Complex test1(4.5,6.5);
 
-
 //I will fill these with data
 a[0].setComplex(3,4);
 a[1].setComplex(-1,3);

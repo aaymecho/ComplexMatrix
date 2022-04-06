@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
+/*
 //first let's declare an array of complex numbers
 Complex a[5];
 Complex result[5];
@@ -57,7 +58,7 @@ for (int i = 0; i < 5 ; i++)
 {
         result[i].displayPolar();
 }
-
+*/
 //Now start to test the matrix 
 
 Matrix A(3,3);

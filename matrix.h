@@ -17,5 +17,6 @@ class Matrix {
     public:
         Complex & operator()(int, int);
     private:
+    
 }
 #endif
