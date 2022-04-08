@@ -55,7 +55,12 @@ for (int i = 0; i < 5 ; i++)
 {
         result[i].displayPolar();
 }
-Matrix A(3,4);
-A.getMatrixPtr()[0] = &a[0];
-cout << A.getMatrixPtr()[0]->getReal() << endl;
+
+
+Matrix A(3,3);
+Matrix C(4,4);
+Matrix D(2,3);
+Matrix E(2,3);
+Complex num(1,1);
+
 }

@@ -20,5 +20,11 @@ Matrix::~Matrix()
     col = 0;
     cout << "Deallocated array with size " << row*col << endl;
 };
-// ------------------------------------------------------------------------
 
+Matrix& Matrix::operator=(Complex& c) {
+    int position = (row(x - 1) + y) - 1;
+    getMatrixPtr()[position]->setReal(c.getReal());
+    getMatrixPtr()[position]->setImag(c.getImag());
+    return (*this); 
+};
+// -----------------------------------------------------------------------

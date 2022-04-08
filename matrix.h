@@ -11,6 +11,8 @@ class Matrix {
         Matrix(int r, int c); //constructor
         ~Matrix(); //destructor
         Complex** getMatrixPtr() { return matrixPtr; };
+        Matrix& operator=(Complex&);
+        
     private:
         Complex** matrixPtr;
         int row;
