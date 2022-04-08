@@ -61,6 +61,25 @@ Matrix A(3,3);
 Matrix C(4,4);
 Matrix D(2,3);
 Matrix E(2,3);
+
 Complex num(1,1);
+int counter =0;
+
+for (int i = 1; i<=3; i++)
+   for (int j = 1; j<=3; j++)
+        { A(i,j) = Complex(counter++,0); 
+
+        }
+for (int i = 1; i<=2; i++)
+   for (int j = 1; j<=3; j++)
+   { 
+          D(i,j) = Complex(counter,counter);
+          counter++;
+    }
+    Matrix B(A);
+
+cout << "A Matrix" << endl;
+A.printMatrix();
+cout << endl;
 
 }

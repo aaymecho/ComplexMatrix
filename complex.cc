@@ -12,14 +12,19 @@ Complex::Complex() {
 Complex::Complex(double inputReal, double inputImag) {
     real = inputReal;
     imag = inputImag;
+    NaN = false;
 };
 
 Complex::Complex(double inputReal) {
     real = inputReal;
     imag = 0;
+    NaN = false;
 };
 
 //setters and getters setup--------------------------------------
+void Complex::setNaN(bool inputNaN) {
+    NaN = inputNaN;
+};
 void Complex::setReal(double value) {
     real = value;
 };
@@ -85,9 +90,10 @@ void Complex::setComplex(double realInput, double imagInput) {
 ostream& operator<<(ostream& out, Complex& object) {
 
     if (object.getNaN() == true) {
+        object.setNaN(false);
         return out << "NaN" << endl;
     } else {
-        return out << object.getReal() << " " << object.getImag() << "j" << endl;
+        return out << object.getReal() << " + " << object.getImag() << "j\t";
     }
 };
 

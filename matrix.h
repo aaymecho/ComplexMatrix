@@ -10,12 +10,21 @@ class Matrix {
     public:
         Matrix(int r, int c); //constructor
         ~Matrix(); //destructor
-        Complex** getMatrixPtr() { return matrixPtr; };
-        Matrix& operator=(Complex&);
+        Complex* getMatrixPtr() { return matrixPtr; };
+        Matrix& operator=(Matrix&);
+        Complex& operator()(int r, int c);
+        friend ostream& operator<<(ostream&, Matrix&);
+
+        //setters and getters
+        int getPosition() { return position; };
+        int getRow() { return row; };
+        int getCol() { return col; };
+        ostream& printMatrix();
         
     private:
-        Complex** matrixPtr;
+        Complex* matrixPtr;
         int row;
         int col;
+        int position;
 };
 #endif

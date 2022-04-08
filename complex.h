@@ -23,6 +23,7 @@ class Complex {
         double getImag();
         void setComplex(double, double);
         bool getNaN();
+        void setNaN(bool);
 
         //operator overloading
         Complex operator+(Complex);
