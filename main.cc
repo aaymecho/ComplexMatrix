@@ -1,7 +1,6 @@
 #include <iostream>
 #include <iomanip>
-#include "complex.h"
-
+#include "matrix.h"
 
 
 int main()
@@ -56,4 +55,7 @@ for (int i = 0; i < 5 ; i++)
 {
         result[i].displayPolar();
 }
+Matrix A(3,4);
+A.getMatrixPtr()[0] = &a[0];
+cout << A.getMatrixPtr()[0]->getReal() << endl;
 }
