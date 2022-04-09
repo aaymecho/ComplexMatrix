@@ -76,10 +76,30 @@ for (int i = 1; i<=2; i++)
           D(i,j) = Complex(counter,counter);
           counter++;
     }
-    Matrix B(A);
+
+Matrix B(A);
 
 cout << "A Matrix" << endl;
 A.printMatrix();
 cout << endl;
+
+cout << "B transpose" << endl;
+B.transpose();
+cout << B << endl;
+cout << endl;
+
+cout << "The C matrix " << endl;
+
+C(1,1) = num;
+C(2,2) = Complex(4,2);
+C(3,3) = Complex(1,1);
+C(4,4) = Complex(0,1);
+
+cout << C << endl;
+
+cout << "D Matrix" << endl;
+D.printMatrix();
+cout << endl;
+
 
 }

@@ -19,12 +19,12 @@ Matrix::~Matrix()
 
 
 //Overload functions------------------------------------------------------
-// Matrix& Matrix::operator=(Matrix& c) {
-//     int position = (row*(findRow - 1) + findCol) - 1;
-//     getMatrixPtr()[position]->setReal(c.getMatrixPtr()->getReal());
-//     getMatrixPtr()[position]->setImag(c.getMatrixPtr()->getImag());
-//     return (*this);
-// };
+Matrix& Matrix::operator=(Matrix& c) {
+    for (int i=0; i<row*col; i++) {
+        this->getMatrixPtr()[i] = c.getMatrixPtr()[i];
+    }
+    return (*this);
+};
 
 Complex& Matrix::operator()(int r, int c) {
     position = (row*(r - 1) + c) - 1;
@@ -63,4 +63,19 @@ ostream& Matrix::printMatrix() {
         }
         return cout << endl;
     }
+};
+
+//Matrix operations-------------------------------------------------------
+void Matrix::transpose() {
+    Matrix Transpose(row, col);
+    Transpose.setMatrixPtr(new Complex[row*col]);
+    for (int i=0; i<row; ++i) {
+        for (int j=0; j<col; ++j) {
+            int indexOne = i*col+j; //original index
+            int indexTwo = (j*row)+i; //transpose index
+
+            Transpose.getMatrixPtr()[indexOne] = (*this).getMatrixPtr()[indexTwo];
+        }
+    }
+    (*this) = Transpose;
 };
