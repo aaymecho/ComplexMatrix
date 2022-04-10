@@ -9,7 +9,7 @@
 class Matrix {
     public:
         Matrix(int r, int c); //constructor
-        Matrix(Complex&);
+        Matrix(Matrix&); //copy constructor
         ~Matrix(); //destructor
 
         //matrix operations and overloads
@@ -20,12 +20,18 @@ class Matrix {
         friend ostream& operator<<(ostream&, Matrix&);
         Matrix& operator~();
         Matrix& operator+(Matrix&);
+        Matrix& operator*(Complex&);
 
 
         //setters and getters
         int getPosition() { return position; };
         int getRow() { return row; };
         int getCol() { return col; };
+        void setCol(int c) { col = c; };
+        void setRow(int r) { row = r; };
+        void setPosition(int p) { position = p; };
+
+
         ostream& printMatrix();
         void transpose();
         void setMatrixPtr(Complex* Ptr) { matrixPtr = Ptr;};

@@ -84,8 +84,8 @@ A.printMatrix();
 cout << endl;
 
 cout << "B transpose" << endl;
-// B.transpose();
-// cout << B << endl;
+B.transpose();
+cout << B << endl;
 B.printMatrix();
 cout << endl;
 
@@ -102,4 +102,23 @@ cout << "D Matrix" << endl;
 D.printMatrix();
 cout << endl;
 
+A = B*B;
+cout << "The A = B*B matrix is " << endl;
+cout << A << endl;
+cout << endl;
+
+cout << "The transpose of A is then" << endl;
+(~A).printMatrix();
+cout << endl;
+
+cout << "The matrix A is still the following" << endl;
+cout << A << endl;
+
+B = B+B;
+cout << "The B = B+B matrix is " << endl;
+cout << B << endl;
+
+B = Complex(6,7)*B;
+cout << "The B = (6+7j)*B gives B as " << endl;
+cout << B << endl;
 }

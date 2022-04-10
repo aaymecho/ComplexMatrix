@@ -20,8 +20,14 @@ Matrix::~Matrix() {
 };
 
 Matrix::Matrix(Matrix& c) {
-    
-}
+    row = c.row;
+    col = c.col;
+    matrixPtr = new Complex[row*col];
+    for (int i = 0; i < row*col; i++) {
+        matrixPtr[i] = c.matrixPtr[i];
+    }
+    cout << "Allocated array with size " << row*col << endl;
+};
 
 
 
@@ -78,20 +84,16 @@ Matrix& Matrix::operator~() {
 };
 
 //Matrix operations-------------------------------------------------------
-// Matrix& Matrix::operator+ (Matrix& c) {
-//     Matrix add = Matrix(row, col);
-//     add.setMatrixPtr(new Complex[row*col]);
-//     if (getRow() == c.getRow() && getCol() == c.getCol()) {
-//         for (int i=0; i<row*col; i++) {
-//             add.getMatrixPtr()[i] = this->getMatrixPtr()[i] + c.getMatrixPtr()[i];
-//         }
-//         (*this) = add;
-//     } else {
-//         cout << "Matrices are not the same size" << endl;
-//         // delete [] add.getMatrixPtr();
-//     }
-//     return (*this);
-// };
+Matrix& Matrix::operator+ (Matrix& c) {
+    if (this->getRow() == c.getRow() && this->getCol() == c.getCol()) {
+        for (int i=0; i<this->getRow()*this->getCol(); i++) {
+            this->getMatrixPtr()[i] = this->getMatrixPtr()[i] + c.getMatrixPtr()[i];
+        }
+    } else {
+        cout << "Matrices are not the same size" << endl;
+    }
+    return *(this);
+};
 
 void Matrix::transpose() {
     Matrix Transpose(row, col);
@@ -127,3 +129,9 @@ Matrix& Matrix::operator*(Matrix& m) {
     }
 };
 
+Matrix& Matrix::operator*(Complex& c) {
+    for (int i=0; i<row*col; i++) {
+        this->getMatrixPtr()[i] = this->getMatrixPtr()[i] * c;
+    }
+    return (*this);
+};
