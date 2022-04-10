@@ -2,7 +2,6 @@
 #include <iomanip>
 #include "matrix.h"
 
-
 int main()
 {
 //first let's declare an array of complex numbers
@@ -121,4 +120,5 @@ cout << B << endl;
 B = Complex(6,7)*B;
 cout << "The B = (6+7j)*B gives B as " << endl;
 cout << B << endl;
+
 }

@@ -6,6 +6,9 @@
 #include <string>
 #define MATRIX_FIELD 30
 
+class Matrix;
+Matrix& operator*(Complex, Matrix &);
+
 class Matrix {
     public:
         Matrix(int r, int c); //constructor
@@ -20,7 +23,7 @@ class Matrix {
         friend ostream& operator<<(ostream&, Matrix&);
         Matrix& operator~();
         Matrix& operator+(Matrix&);
-        Matrix& operator*(Complex&);
+        friend Matrix& operator*(Complex, Matrix &);
 
 
         //setters and getters

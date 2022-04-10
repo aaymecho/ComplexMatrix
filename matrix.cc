@@ -1,5 +1,7 @@
 #include "matrix.h"
 
+Matrix TEMPORARY(4,3);
+
 //Dynamic allocation/dealloaction---------------------------------------
 Matrix::Matrix(int r, int c)
 {
@@ -79,8 +81,8 @@ ostream& Matrix::printMatrix() {
 };
 
 Matrix& Matrix::operator~() {
-    this->transpose();
-    return *(this);
+    (*this).transpose();
+    return (*this);
 };
 
 //Matrix operations-------------------------------------------------------
@@ -95,9 +97,9 @@ Matrix& Matrix::operator+ (Matrix& c) {
     return *(this);
 };
 
+
 void Matrix::transpose() {
     Matrix Transpose(row, col);
-    Transpose.setMatrixPtr(new Complex[row*col]);
     for (int i=0; i<row; ++i) {
         for (int j=0; j<col; ++j) {
             int indexOne = i*col+j; //original index
@@ -107,7 +109,6 @@ void Matrix::transpose() {
         }
     }
     (*this) = Transpose;
-    // delete [] Transpose.getMatrixPtr();
 };
 
 Matrix& Matrix::operator*(Matrix& m) {
@@ -116,7 +117,6 @@ Matrix& Matrix::operator*(Matrix& m) {
         return (*this);
     } else {
         Matrix Multiply(row, m.getCol());
-        Multiply.setMatrixPtr(new Complex[row*m.getCol()]);
         for (int i=0; i<row; ++i) {
             for (int j=0; j<m.getCol(); ++j) {
                 for (int k=0; k<col; ++k) {
@@ -124,14 +124,14 @@ Matrix& Matrix::operator*(Matrix& m) {
                 }
             }
         }
-        (*this) = Multiply;
-        return (*this);
+        (TEMPORARY) = Multiply;
+        return (TEMPORARY);
     }
 };
 
-Matrix& Matrix::operator*(Complex& c) {
-    for (int i=0; i<row*col; i++) {
-        this->getMatrixPtr()[i] = this->getMatrixPtr()[i] * c;
+Matrix& operator*(Complex& c, Matrix& m) {
+    for (int i=0; i<m.getRow()*m.getCol(); i++) {
+        m.getMatrixPtr()[i] = m.getMatrixPtr()[i] * c;
     }
-    return (*this);
-};
+    return m;
+}
