@@ -9,13 +9,20 @@ Matrix::Matrix(int r, int c)
     cout << "Allocated array with size " << r*c << endl;
 };
 
-Matrix::~Matrix()
-{
-    delete [] matrixPtr;
+Matrix::~Matrix() {
+    if (matrixPtr!=NULL) {
+        delete matrixPtr;
+        matrixPtr = NULL;
+    }
     cout << "Deallocated array with size " << row*col << endl;
     row = 0;
     col = 0;
 };
+
+Matrix::Matrix(Matrix& c) {
+    
+}
+
 
 
 //Overload functions------------------------------------------------------
@@ -65,7 +72,27 @@ ostream& Matrix::printMatrix() {
     }
 };
 
+Matrix& Matrix::operator~() {
+    this->transpose();
+    return *(this);
+};
+
 //Matrix operations-------------------------------------------------------
+// Matrix& Matrix::operator+ (Matrix& c) {
+//     Matrix add = Matrix(row, col);
+//     add.setMatrixPtr(new Complex[row*col]);
+//     if (getRow() == c.getRow() && getCol() == c.getCol()) {
+//         for (int i=0; i<row*col; i++) {
+//             add.getMatrixPtr()[i] = this->getMatrixPtr()[i] + c.getMatrixPtr()[i];
+//         }
+//         (*this) = add;
+//     } else {
+//         cout << "Matrices are not the same size" << endl;
+//         // delete [] add.getMatrixPtr();
+//     }
+//     return (*this);
+// };
+
 void Matrix::transpose() {
     Matrix Transpose(row, col);
     Transpose.setMatrixPtr(new Complex[row*col]);
@@ -78,4 +105,25 @@ void Matrix::transpose() {
         }
     }
     (*this) = Transpose;
+    // delete [] Transpose.getMatrixPtr();
 };
+
+Matrix& Matrix::operator*(Matrix& m) {
+    if (col != m.getRow()) {
+        invalidMatrix = true;
+        return (*this);
+    } else {
+        Matrix Multiply(row, m.getCol());
+        Multiply.setMatrixPtr(new Complex[row*m.getCol()]);
+        for (int i=0; i<row; ++i) {
+            for (int j=0; j<m.getCol(); ++j) {
+                for (int k=0; k<col; ++k) {
+                    Multiply.getMatrixPtr()[i*m.getCol()+j] =  Multiply.getMatrixPtr()[i*m.getCol()+j] + (*this).getMatrixPtr()[i*col+k] * m.getMatrixPtr()[k*m.getCol()+j];
+                }
+            }
+        }
+        (*this) = Multiply;
+        return (*this);
+    }
+};
+

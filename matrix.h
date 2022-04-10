@@ -9,11 +9,18 @@
 class Matrix {
     public:
         Matrix(int r, int c); //constructor
+        Matrix(Complex&);
         ~Matrix(); //destructor
+
+        //matrix operations and overloads
         Complex* getMatrixPtr() { return matrixPtr; };
         Matrix& operator=(Matrix&);
         Complex& operator()(int r, int c);
+        Matrix& operator*(Matrix&);
         friend ostream& operator<<(ostream&, Matrix&);
+        Matrix& operator~();
+        Matrix& operator+(Matrix&);
+
 
         //setters and getters
         int getPosition() { return position; };

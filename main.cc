@@ -84,8 +84,9 @@ A.printMatrix();
 cout << endl;
 
 cout << "B transpose" << endl;
-B.transpose();
-cout << B << endl;
+// B.transpose();
+// cout << B << endl;
+B.printMatrix();
 cout << endl;
 
 cout << "The C matrix " << endl;
@@ -100,6 +101,5 @@ cout << C << endl;
 cout << "D Matrix" << endl;
 D.printMatrix();
 cout << endl;
-
 
 }
