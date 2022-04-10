@@ -9,6 +9,7 @@ Matrix::Matrix(int r, int c)
     row = r;
     col = c;
     cout << "Allocated array with size " << r*c << endl;
+    invalidMatrix = false;
 };
 
 Matrix::~Matrix() {
@@ -38,6 +39,7 @@ Matrix& Matrix::operator=(Matrix& c) {
     for (int i=0; i<row*col; i++) {
         this->getMatrixPtr()[i] = c.getMatrixPtr()[i];
     }
+    this->setInvalidMatrix(c.getInvalidMatrix());
     return (*this);
 };
 
@@ -47,8 +49,8 @@ Complex& Matrix::operator()(int r, int c) {
 };
 
 ostream& operator<<(ostream& out, Matrix& object) {
-    if (false) {
-        return out << "NaN" << endl;
+    if (object.getInvalidMatrix() == true) {
+        return out << "Matrix Mismatch Error!" << endl << "This matrix has zero elements" << endl;
     } else {
         int checkCol=0;
         for (int i=0; i<object.getRow()*object.getCol(); i++) {
@@ -64,8 +66,8 @@ ostream& operator<<(ostream& out, Matrix& object) {
 };
 
 ostream& Matrix::printMatrix() {
-    if (false) {
-        return cout << "NaN" << endl;
+    if (this->getInvalidMatrix() == true) {
+        return cout << "Matrix Mismatch Error!" << endl << "This matrix has zero elements" << endl;
     } else {
         int checkCol=0;
         for (int i=0; i<getRow()*getCol(); i++) {
@@ -92,7 +94,7 @@ Matrix& Matrix::operator+ (Matrix& c) {
             this->getMatrixPtr()[i] = this->getMatrixPtr()[i] + c.getMatrixPtr()[i];
         }
     } else {
-        cout << "Matrices are not the same size" << endl;
+        invalidMatrix = true;
     }
     return *(this);
 };
@@ -113,8 +115,8 @@ void Matrix::transpose() {
 
 Matrix& Matrix::operator*(Matrix& m) {
     if (col != m.getRow()) {
-        invalidMatrix = true;
-        return (*this);
+        TEMPORARY.setInvalidMatrix(true);
+        return (TEMPORARY);
     } else {
         Matrix Multiply(row, m.getCol());
         for (int i=0; i<row; ++i) {
@@ -129,9 +131,46 @@ Matrix& Matrix::operator*(Matrix& m) {
     }
 };
 
-Matrix& operator*(Complex& c, Matrix& m) {
+
+
+Matrix& operator*(Complex c, Matrix& m) {
     for (int i=0; i<m.getRow()*m.getCol(); i++) {
-        m.getMatrixPtr()[i] = m.getMatrixPtr()[i] * c;
+        TEMPORARY.getMatrixPtr()[i] = c * m.getMatrixPtr()[i];
     }
-    return m;
+    return TEMPORARY;
+};
+
+Matrix& operator*(Matrix& m, Complex c) {
+    for (int i=0; i<m.getRow()*m.getCol(); i++) {
+        TEMPORARY.getMatrixPtr()[i] = c * m.getMatrixPtr()[i];
+    }
+    return TEMPORARY;
+};
+
+Matrix& Matrix::operator!() {
+    for (int i=0; i<row; ++i) {
+        for (int j=0; j<col; ++j) {
+            int indexOne = i*col+j; //original index
+            int indexTwo = (j*row)+i; //transpose index
+
+            TEMPORARY.getMatrixPtr()[indexOne] = (*this).getMatrixPtr()[indexTwo];
+        }
+    }
+    for (int i=0; i<getRow()*getCol(); i++) {
+        TEMPORARY.getMatrixPtr()[i].setImag(-TEMPORARY.getMatrixPtr()[i].getImag());
+    }
+    (*this) = TEMPORARY;
+    return (*this);
 }
+
+Matrix& Matrix::operator-(Matrix& m) {
+    if (row!=m.getRow() && col != getCol()) {
+        invalidMatrix = true;
+    }
+    else {
+        for (int i=0; i<this->row*this->col; i++) {
+            TEMPORARY.getMatrixPtr()[i] = this->getMatrixPtr()[i] - m.getMatrixPtr()[i];
+        }
+    }
+    return TEMPORARY;
+};

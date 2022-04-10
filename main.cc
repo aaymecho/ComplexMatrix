@@ -2,6 +2,7 @@
 #include <iomanip>
 #include "matrix.h"
 
+
 int main()
 {
 //first let's declare an array of complex numbers
@@ -121,4 +122,23 @@ B = Complex(6,7)*B;
 cout << "The B = (6+7j)*B gives B as " << endl;
 cout << B << endl;
 
+B = B*Complex(7,7);
+cout << "The B = B*(7+7j) gives B as " << endl;
+cout << B << endl;
+
+B = !B;
+cout << "The conjugate transpose of B is " << endl;
+cout << B << endl;
+
+cout << "The A = A-A matrix is " << endl;
+A = A - A;
+cout << A << endl;
+
+cout << "Multiply with rectanglur matrix D: E=D*B" << endl;
+E = D*B;
+cout << E << endl;
+
+cout << "Try multiplying mismatched matrices" << endl;
+C = A*B;
+cout << C << endl;
 }

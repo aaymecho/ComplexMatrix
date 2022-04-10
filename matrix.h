@@ -8,6 +8,7 @@
 
 class Matrix;
 Matrix& operator*(Complex, Matrix &);
+Matrix& operator*(Matrix &, Complex);
 
 class Matrix {
     public:
@@ -24,6 +25,10 @@ class Matrix {
         Matrix& operator~();
         Matrix& operator+(Matrix&);
         friend Matrix& operator*(Complex, Matrix &);
+        friend Matrix& operator*(Matrix &, Complex);
+        Matrix& operator!();
+        Matrix& operator-(Matrix&);
+
 
 
         //setters and getters
@@ -33,6 +38,8 @@ class Matrix {
         void setCol(int c) { col = c; };
         void setRow(int r) { row = r; };
         void setPosition(int p) { position = p; };
+        bool getInvalidMatrix() { return invalidMatrix; };
+        void setInvalidMatrix(bool i) { invalidMatrix = i; };
 
 
         ostream& printMatrix();
