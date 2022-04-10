@@ -2,6 +2,7 @@
 
 Matrix TEMPORARY(4,3);
 
+
 //Dynamic allocation/dealloaction---------------------------------------
 Matrix::Matrix(int r, int c)
 {
@@ -124,6 +125,15 @@ Matrix& Matrix::operator*(Matrix& m) {
                 for (int k=0; k<col; ++k) {
                     Multiply.getMatrixPtr()[i*m.getCol()+j] =  Multiply.getMatrixPtr()[i*m.getCol()+j] + (*this).getMatrixPtr()[i*col+k] * m.getMatrixPtr()[k*m.getCol()+j];
                 }
+            }
+        }
+        int zeroMatrix = 0;
+        for (int i=0; i<Multiply.getRow()*Multiply.getCol(); i++) {
+            if (Multiply.getMatrixPtr()[i].getReal() == 0 && Multiply.getMatrixPtr()[i].getImag() == 0) {
+                zeroMatrix++;
+            }
+            if (zeroMatrix == Multiply.getRow()*Multiply.getCol()) {
+                Multiply.setInvalidMatrix(true);
             }
         }
         (TEMPORARY) = Multiply;

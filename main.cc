@@ -141,4 +141,11 @@ cout << E << endl;
 cout << "Try multiplying mismatched matrices" << endl;
 C = A*B;
 cout << C << endl;
+
+cout << A << endl;
+cout << B << endl;
+
+cout << "Try adding mismatched matrices" << endl;
+A = A+B;
+cout << A << endl;
 }
