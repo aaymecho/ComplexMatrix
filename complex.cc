@@ -122,8 +122,19 @@ ostream& Complex::displayPolar() {
 
 ostream& Complex::displayRect() {
     if (NaN == true) {
-        return cout << "NaN" << endl;
-    } else {
-        return cout << real << " + " << imag << "j" << endl;
+        cout << "NaN" << endl;
+    } 
+    else if (imag == 0 && real == 0) {
+        cout << real << endl;
+    } 
+    else if (imag == 0 && real != 0) {
+        cout << real << endl;
+    } 
+    else if (real == 0 && imag != 0) {
+        cout << imag << endl;
+    } 
+    else {
+        cout << real << " + " << imag << "j" << endl;
     }
+    return cout;
 };
