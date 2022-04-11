@@ -12,10 +12,7 @@ Complex test1(4.5,6.5);
 
 
 //I will fill these with data
-a[0].setComplex(0,0);
-
-cout << "The first complex number is: " << a[0] << endl;
-
+a[0].setComplex(3,4);
 a[1].setComplex(-1,3);
 a[2].setComplex(-1.23,-9.83);
 a[3].setComplex(3.14,-98.3);
@@ -29,10 +26,8 @@ for (int i = 0; i < 5; i++)
 }
 
 //Now test the add function
-
 cout << "\nTesting add operator a[0] + a[1]" << endl;
 result[0] = a[0] + a[1];
-result[0].setComplex(0,0);
 result[0].displayRect();
 
 //Now test the sub function
@@ -44,16 +39,18 @@ cout << "\nTesting multiply operator a[2] * a[3]" << endl;
 result[2] = a[2] * a[3];
 cout << result[2] << endl;
 result[2].displayRect();
+cout << endl;
 
 //Now test the divide function
 cout << "\nTesting divide operator a[3] / a[4]" << endl;
 result[3] = a[3] / a[4];
 result[3].displayRect();
+cout << endl;
 
 //Now test the divide by zero 
 cout << "\nTesting divide by zero a[4] / (0)" << endl;
 result[4] = a[4] / Complex(0,0);
-cout << result[4] << endl;
+cout << result[4];
 
 //Now display the results array in polar format 
 cout << "\nNow display the results array in polar format" << endl;
@@ -75,14 +72,7 @@ for (int i = 1; i<=3; i++)
    for (int j = 1; j<=3; j++)
         { A(i,j) = Complex(counter++,0); }
 
-// for (int i = 1; i<=2; i++)
-//    for (int j = 1; j<=3; j++)
-//    { 
-//           D(i,j) = Complex(counter,counter);
-//           counter++;
-//     }
-
-    for (int i = 0; i<6; i++) {
+for (int i = 0; i<6; i++) {
        D.getMatrixPtr()[i].setComplex(9+i,9+i);
     }
 
@@ -90,7 +80,6 @@ Matrix B(A);
 
 cout << "A Matrix" << endl;
 A.printMatrix();
-cout << endl;
 
 cout << "B transpose" << endl;
 B.transpose();
@@ -108,7 +97,6 @@ cout << C << endl;
 
 cout << "D Matrix" << endl;
 D.printMatrix();
-cout << endl;
 
 A = B*B;
 cout << "The A = B*B matrix is " << endl;
@@ -117,7 +105,6 @@ cout << endl;
 
 cout << "The transpose of A is then" << endl;
 (~A).printMatrix();
-cout << endl;
 
 cout << "The matrix A is still the following" << endl;
 cout << A << endl;
@@ -160,5 +147,4 @@ cout << "Try subtracting mismatched matrices" << endl;
 A = A-B;
 cout << A << endl;
 return 0;
-
 }

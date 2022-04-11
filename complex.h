@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <string>
 using namespace std;
 
 #define ROW 2;
@@ -13,17 +14,17 @@ class Complex {
     public:
         //constructors
         Complex();
-        Complex(double, double);
+        Complex(const double, const double);
         Complex(double);
 
         //setters and getters
-        void setReal(double);
+        void setReal(const double);
         double getReal();
-        void setImag(double);
+        void setImag(const double);
         double getImag();
-        void setComplex(double, double);
+        void setComplex(const double, const double);
         bool getNaN();
-        void setNaN(bool);
+        void setNaN(const bool);
 
         //operator overloading
         Complex operator+(Complex);
@@ -36,6 +37,7 @@ class Complex {
         //polar and rectangular
         
         ostream& displayRect();
+        ostream& displayRectTwo(ostream&);
         ostream& displayPolar();
         
     private:

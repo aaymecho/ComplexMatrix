@@ -9,7 +9,7 @@ Complex::Complex() {
     NaN = false;
 };
 
-Complex::Complex(double inputReal, double inputImag) {
+Complex::Complex(const double inputReal, const double inputImag) {
     real = inputReal;
     imag = inputImag;
     NaN = false;
@@ -22,14 +22,14 @@ Complex::Complex(double inputReal) {
 };
 
 //setters and getters setup--------------------------------------
-void Complex::setNaN(bool inputNaN) {
+void Complex::setNaN(const bool inputNaN) {
     NaN = inputNaN;
 };
-void Complex::setReal(double value) {
+void Complex::setReal(const double value) {
     real = value;
 };
 
-void Complex::setImag(double value) {
+void Complex::setImag(const double value) {
     imag = value;
 };
 
@@ -81,25 +81,49 @@ Complex Complex::operator/(Complex input) {
     return sum;
 };
 
-void Complex::setComplex(double realInput, double imagInput) {
+void Complex::setComplex(const double realInput, const double imagInput) {
     real = realInput;
     imag = imagInput;
 };
 //-------------------------------------------------------------------
 
 ostream& operator<<(ostream& out, Complex& object) {
-
+    string result;
     if (object.getNaN() == true) {
         object.setNaN(false);
-        return out << "NaN" << endl;
-    } else {
-        return out << object.getReal() << " + " << object.getImag() << "j\t";
+        out << "NaN" << endl;
+    } 
+    else if (object.getImag() == 0 && object.getReal() == 0){
+        result = to_string(object.getReal());
     }
+    else if (object.getReal() != 0 && object.getImag() == 0) {
+            result =  to_string(object.getReal());
+        }
+    else if (object.getImag() != 0 && object.getReal() == 0) {
+        result =  to_string(object.getImag()) + "j";
+    }
+
+    else {
+        result = to_string(object.getReal()) + " + " + to_string(object.getImag()) + "j";
+
+        // out << object.getReal() << " + " << object.getImag() << "j" ;//<< setw(20);
+    }
+    out << result << setw(20);
+    return out;
 };
 
 ostream& Complex::displayPolar() {
     double amp = sqrt(pow(imag, 2) + pow(real, 2));
     double angle;
+    if (real == 0 && imag == 0) {
+        NaN = true;
+    }
+    if (real == 0 && imag != 0) {
+        real = 1;
+    }
+    if (real != 0 && imag == 1) {
+        imag = 1;
+    }
     if (NaN == false) {
         if (real > 0) {
             angle = atan(imag/real);
@@ -121,20 +145,31 @@ ostream& Complex::displayPolar() {
 };
 
 ostream& Complex::displayRect() {
+     string lol;
     if (NaN == true) {
-        cout << "NaN" << endl;
-    } 
-    else if (imag == 0 && real == 0) {
-        cout << real << endl;
-    } 
-    else if (imag == 0 && real != 0) {
-        cout << real << endl;
-    } 
-    else if (real == 0 && imag != 0) {
-        cout << imag << endl;
+        lol =  "NaN";
     } 
     else {
-        cout << real << " + " << imag << "j" << endl;
+        lol = to_string(real) + " + " + to_string(imag) + "j";
     }
-    return cout;
+    return cout << lol;
 };
+
+// ostream& Complex::displayRectTwo(ostream& in) {
+//     if (NaN == true) {
+//         in << "NaN" << endl;
+//     } 
+//     else if (imag == 0 && real == 0) {
+//         in << real << endl;
+//     } 
+//     else if (imag == 0 && real != 0) {
+//         in << real << endl;
+//     } 
+//     else if (real == 0 && imag != 0) {
+//         in << imag << endl;
+//     } 
+//     else {
+//         in << real << " + " << imag << "j" << endl;
+//     }
+//     return in;
+// };

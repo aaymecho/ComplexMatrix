@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-Matrix TEMPORARY(4,3);
+Matrix TEMPORARY(3,3);
 
 
 //Dynamic allocation/dealloaction---------------------------------------
@@ -9,14 +9,14 @@ Matrix::Matrix(int r, int c)
     matrixPtr = new Complex[r*c];
     row = r;
     col = c;
-    //cout << "Allocated array with size " << r*c << endl;
+    //cout << "Allocated array setwith size " << r*c << endl; //ignore (tracking memory)
     invalidMatrix = false;
 };
 
 Matrix::~Matrix() {
     delete matrixPtr;
     matrixPtr = NULL;
-    //cout << "Deallocated array with size " << row*col << endl;
+    //cout << "Deallocated array with size " << row*col << endl; (tracking memory)
     row = 0;
     col = 0;
 };
@@ -28,17 +28,29 @@ Matrix::Matrix(Matrix& c) {
     for (int i = 0; i < row*col; i++) {
         matrixPtr[i] = c.matrixPtr[i];
     }
-    cout << "Allocated array with size " << row*col << endl;
 };
 
 
 
 //Overload functions------------------------------------------------------
 Matrix& Matrix::operator=(Matrix& c) {
-    for (int i=0; i<row*col; i++) {
-        this->getMatrixPtr()[i] = c.getMatrixPtr()[i];
+    if (row == c.getRow() && col == c.getCol()) {
+        for (int i=0; i<row*col; i++) {
+            this->getMatrixPtr()[i] = c.getMatrixPtr()[i];
+        }
+        
+        this->setInvalidMatrix(c.getInvalidMatrix());
+    } else {
+        delete [] this->matrixPtr;
+        this->matrixPtr = new Complex[c.getRow()*c.getCol()];
+        for(int i = 1; i <= c.getRow(); i++){
+            for(int j = 1; j <= c.getCol(); j++){
+                (*this)(i,j) = c(i,j);
+            }
+        }
+        this -> row = c.getRow();
+        this -> col= c.getCol();
     }
-    this->setInvalidMatrix(c.getInvalidMatrix());
     return (*this);
 };
 
@@ -52,8 +64,9 @@ ostream& operator<<(ostream& out, Matrix& object) {
         return out << "Matrix Mismatch Error!" << endl << "This matrix has zero elements" << endl;
     } else {
         int checkCol=0;
+        out <<left<< setw(30);
         for (int i=0; i<object.getRow()*object.getCol(); i++) {
-            out << object.getMatrixPtr()[i] << setw(5);
+            out << object.getMatrixPtr()[i] << setw(30);
             checkCol++;
             if (checkCol == object.getCol()) {
                 out << endl;
@@ -69,8 +82,9 @@ ostream& Matrix::printMatrix() {
         return cout << "Matrix Mismatch Error!" << endl << "This matrix has zero elements" << endl;
     } else {
         int checkCol=0;
+        cout << left << setw(30);
         for (int i=0; i<getRow()*getCol(); i++) {
-            cout << getMatrixPtr()[i] << setw(5);
+            cout << getMatrixPtr()[i] << setw(30);
             checkCol++;
             if (checkCol == getCol()) {
                 cout << endl;
@@ -82,8 +96,10 @@ ostream& Matrix::printMatrix() {
 };
 
 Matrix& Matrix::operator~() {
-    (*this).transpose();
-    return (*this);
+    TEMPORARY = (*this);
+    (TEMPORARY).transpose();
+
+    return (TEMPORARY);
 };
 
 //Matrix operations-------------------------------------------------------
@@ -155,8 +171,8 @@ void Matrix::transpose() {
 
 Matrix& Matrix::operator*(Matrix& m) {
     if (col != m.getRow()) {
-        TEMPORARY.setInvalidMatrix(true);
-        return (TEMPORARY);
+        this->setInvalidMatrix(true);
+        return (*this);
     } else {
         Matrix Multiply(row, m.getCol());
         for (int i=0; i<row; ++i) {
@@ -211,7 +227,7 @@ Matrix& Matrix::operator!() {
     (*this) = TEMPORARY;
     return (*this);
 }
-
+//TESTING-------------------------------------------------------------------
 // Matrix& Matrix::operator-(Matrix& m) {
 //     if (row!=m.getRow() && col != getCol()) {
 //         invalidMatrix = true;
