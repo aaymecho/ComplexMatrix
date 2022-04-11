@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include "matrix.h"
-
+using namespace std;
 
 int main()
 {
@@ -9,6 +9,7 @@ int main()
 Complex a[5];
 Complex result[5];
 Complex test1(4.5,6.5);
+
 
 //I will fill these with data
 a[0].setComplex(3,4);
@@ -56,25 +57,28 @@ for (int i = 0; i < 5 ; i++)
         result[i].displayPolar();
 }
 
+//Now start to test the matrix 
 
 Matrix A(3,3);
 Matrix C(4,4);
 Matrix D(2,3);
 Matrix E(2,3);
-
 Complex num(1,1);
 int counter =0;
 
 for (int i = 1; i<=3; i++)
    for (int j = 1; j<=3; j++)
-        { A(i,j) = Complex(counter++,0); 
+        { A(i,j) = Complex(counter++,0); }
 
-        }
-for (int i = 1; i<=2; i++)
-   for (int j = 1; j<=3; j++)
-   { 
-          D(i,j) = Complex(counter,counter);
-          counter++;
+// for (int i = 1; i<=2; i++)
+//    for (int j = 1; j<=3; j++)
+//    { 
+//           D(i,j) = Complex(counter,counter);
+//           counter++;
+//     }
+
+    for (int i = 0; i<6; i++) {
+       D.getMatrixPtr()[i].setComplex(9+i,9+i);
     }
 
 Matrix B(A);
@@ -86,7 +90,6 @@ cout << endl;
 cout << "B transpose" << endl;
 B.transpose();
 cout << B << endl;
-B.printMatrix();
 cout << endl;
 
 cout << "The C matrix " << endl;
@@ -130,6 +133,8 @@ B = !B;
 cout << "The conjugate transpose of B is " << endl;
 cout << B << endl;
 
+A = C;
+
 cout << "The A = A-A matrix is " << endl;
 A = A - A;
 cout << A << endl;
@@ -142,10 +147,13 @@ cout << "Try multiplying mismatched matrices" << endl;
 C = A*B;
 cout << C << endl;
 
-cout << A << endl;
-cout << B << endl;
-
 cout << "Try adding mismatched matrices" << endl;
 A = A+B;
 cout << A << endl;
+
+cout << "Try subtracting mismatched matrices" << endl;
+A = A-B;
+cout << A << endl;
+return 0;
+
 }

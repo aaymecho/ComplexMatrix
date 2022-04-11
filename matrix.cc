@@ -9,16 +9,14 @@ Matrix::Matrix(int r, int c)
     matrixPtr = new Complex[r*c];
     row = r;
     col = c;
-    cout << "Allocated array with size " << r*c << endl;
+    //cout << "Allocated array with size " << r*c << endl;
     invalidMatrix = false;
 };
 
 Matrix::~Matrix() {
-    if (matrixPtr!=NULL) {
-        delete matrixPtr;
-        matrixPtr = NULL;
-    }
-    cout << "Deallocated array with size " << row*col << endl;
+    delete matrixPtr;
+    matrixPtr = NULL;
+    //cout << "Deallocated array with size " << row*col << endl;
     row = 0;
     col = 0;
 };
@@ -62,7 +60,7 @@ ostream& operator<<(ostream& out, Matrix& object) {
                 checkCol = 0;
             }
         }
-        return out << endl;
+        return out;
     }
 };
 
@@ -90,6 +88,19 @@ Matrix& Matrix::operator~() {
 
 //Matrix operations-------------------------------------------------------
 Matrix& Matrix::operator+ (Matrix& c) {
+    int repeated = 0;
+    int repeatedTwo = 0;
+    for (int i=0; i<c.getRow()*c.getCol(); i++){
+        if (c.getMatrixPtr()[i].getReal() == 0 && c.getMatrixPtr()[i].getImag() == 0) {
+            ++repeated;
+        }
+        if (this->getMatrixPtr()[i].getReal() == 0 && this->getMatrixPtr()[i].getImag() == 0) {
+            ++repeatedTwo;
+        }
+        if (repeated == c.getRow()*c.getCol() || repeatedTwo == this->getRow()*this->getCol()) {
+            this->setInvalidMatrix(true);
+        }
+    }
     if (this->getRow() == c.getRow() && this->getCol() == c.getCol()) {
         for (int i=0; i<this->getRow()*this->getCol(); i++) {
             this->getMatrixPtr()[i] = this->getMatrixPtr()[i] + c.getMatrixPtr()[i];
@@ -99,6 +110,34 @@ Matrix& Matrix::operator+ (Matrix& c) {
     }
     return *(this);
 };
+
+
+
+Matrix& Matrix::operator-(Matrix& c) {
+    int repeated = 0;
+    int repeatedTwo = 0;
+    for (int i=0; i<c.getRow()*c.getCol(); i++){
+        if (c.getMatrixPtr()[i].getReal() == 0 && c.getMatrixPtr()[i].getImag() == 0) {
+            ++repeated;
+        }
+        if (this->getMatrixPtr()[i].getReal() == 0 && this->getMatrixPtr()[i].getImag() == 0) {
+            ++repeatedTwo;
+        }
+        if (repeated == c.getRow()*c.getCol() || repeatedTwo == this->getRow()*this->getCol()) {
+            this->setInvalidMatrix(true);
+        }
+    }
+    if (this->getRow() == c.getRow() && this->getCol() == c.getCol()) {
+        for (int i=0; i<this->getRow()*this->getCol(); i++) {
+            this->getMatrixPtr()[i] = this->getMatrixPtr()[i] - c.getMatrixPtr()[i];
+        }
+    } else {
+        invalidMatrix = true;
+    }
+    return *(this);
+};
+
+
 
 
 void Matrix::transpose() {
@@ -173,14 +212,14 @@ Matrix& Matrix::operator!() {
     return (*this);
 }
 
-Matrix& Matrix::operator-(Matrix& m) {
-    if (row!=m.getRow() && col != getCol()) {
-        invalidMatrix = true;
-    }
-    else {
-        for (int i=0; i<this->row*this->col; i++) {
-            TEMPORARY.getMatrixPtr()[i] = this->getMatrixPtr()[i] - m.getMatrixPtr()[i];
-        }
-    }
-    return TEMPORARY;
-};
+// Matrix& Matrix::operator-(Matrix& m) {
+//     if (row!=m.getRow() && col != getCol()) {
+//         invalidMatrix = true;
+//     }
+//     else {
+//         for (int i=0; i<this->row*this->col; i++) {
+//             TEMPORARY.getMatrixPtr()[i] = this->getMatrixPtr()[i] - m.getMatrixPtr()[i];
+//         }
+//     }
+//     return TEMPORARY;
+// };
